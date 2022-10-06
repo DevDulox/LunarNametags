@@ -1,9 +1,9 @@
 package me.jesusmx.lunar.runnable;
 
 import com.lunarclient.bukkitapi.LunarClientAPI;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.jesusmx.lunar.NameTags;
 import me.jesusmx.lunar.utils.Color;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -32,8 +32,8 @@ public class NameTagRunnable extends BukkitRunnable {
 
             if (show == null || show.isEmpty()) return;
             show = show.stream().map(s -> s.replace("%player-name%", player.getDisplayName())).collect(Collectors.toList());
-            List<String> finalShow = show;
-
+            List<String> finalShow;
+            finalShow = PlaceholderAPI.setPlaceholders(player, show);
             for (Player target : this.instance.getServer().getOnlinePlayers()) {
                 LunarClientAPI.getInstance().overrideNametag(player, Color.translate(finalShow), target);
             }
